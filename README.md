@@ -6,8 +6,9 @@ Monitoring dangerous areas and locating people
 HOW TO USE:
 
 1)pip install -r requirements.txt
-2)python papki.py
-3)upload a photo folder to path directory
+2)pip install --upgrade torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+3)python papki.py
+4)upload a photo folder to path directory
 
 To start script use IDE or type the command 
     python gonixon.py {cam name} {file with photos name}
