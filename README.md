@@ -6,7 +6,7 @@ Monitoring dangerous areas and locating people
 HOW TO USE:
 
 1)pip install -r requirements.txt
-2)pip install --upgrade torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+2)pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 3)python papki.py
 4)upload a photo folder to path directory
 
