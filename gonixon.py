@@ -2,21 +2,14 @@ import cv2
 import numpy as np
 from PIL import Image
 from shapely.geometry import Polygon
-
-from PIL import Image
-
 import csv
+import os
 import os.path
-import os
-import cv2
 import matplotlib.pyplot as plt
-
-
-
 import torch
-import os
-
 import torchvision.transforms as T
+import sys
+import urllib.request
 torch.set_grad_enabled(False)
 
 
@@ -49,18 +42,19 @@ transform = T.Compose([
 ])
 
 
-
 def box_cxcywh_to_xyxy(x):
     x_c, y_c, w, h = x.unbind(1)
     b = [(x_c - 0.5 * w), (y_c - 0.5 * h),
          (x_c + 0.5 * w), (y_c + 0.5 * h)]
     return torch.stack(b, dim=1)
 
+
 def rescale_bboxes(out_bbox, size):
     img_w, img_h = size
     b = box_cxcywh_to_xyxy(out_bbox)
     b = b * torch.tensor([img_w, img_h, img_w, img_h], dtype=torch.float32)
     return b
+
 
 def plot_results(pil_img, prob, boxes):
     image_displayed = False
@@ -86,6 +80,7 @@ def plot_results(pil_img, prob, boxes):
 model = torch.hub.load('facebookresearch/detr', 'detr_resnet50', pretrained=True)
 model.eval()
 
+
 def opredelenie_procenta_vhoda(poligon,chilovik_koordinita):
     rectangle_coords = chilovik_koordinita
     polygon_coords = poligon
@@ -99,9 +94,6 @@ def opredelenie_procenta_vhoda(poligon,chilovik_koordinita):
 
     percentage_inside = intersection_area / rectangle_area * 100
     return percentage_inside
-
-
-
 
 
 # im = Image.open('DpR-Csp-uipv-ShV-V1/1e03d9d6-4381-4c21-956b-f4bfd9d4f460.jpg') # ------------------ картинку сюда ---------------
@@ -128,9 +120,7 @@ def opredelenie_procenta_vhoda(poligon,chilovik_koordinita):
 # yxy2 = int(bboxes_scaled[0][3])
 # print(xyx1)
 
-import sys
-import os
-import urllib.request
+
 def create_folder(directory):
     try:
         if not os.path.exists(directory):
@@ -160,14 +150,9 @@ if __name__ == "__main__":
     name = sys.argv[1]  # Получаем первый аргумент из командной строки - НАЗВАНИЕ КАМЕРЫ
     name2 = sys.argv[2] # НАЗВАНИЕ ПАПКИ ДЛЯ ТЕСТА (ДОЛЖНА БЫТЬ НА УРОВНЕ ПРОЕКТА)
 
-
-
 # plot_results(im, probas[keep], bboxes_scaled) -----------------
 
 poligon = my_dict[name] # полигон камеры
-
-
-
 
 folder_path = name
 ffff =0
@@ -195,8 +180,6 @@ for filename in os.listdir(folder_path):
             yxy2 = int(bboxes_scaled[i][3])
 
         # plot_results(im, probas[keep], bboxes_scaled) -----------------
-
-            poligon = [(534, 288), (834, 219), (1365, 580), (1124, 806)]  # полигон камеры
 
             poligon2 = [(xyx1, xyx2), (yxy1, xyx2), (yxy1, yxy2), (xyx1, yxy2)]
 
